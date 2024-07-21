@@ -25,12 +25,35 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.11'
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'GITHUB_API_URL', GITHUB_API
+    }
+
+//    ksp {
+//        arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
+//        javaSourceCompatibility = "1.8"
+//    }
+
+    hilt {
+        enableAggregatingTask = false
     }
 }
 
@@ -39,6 +62,7 @@ dependencies {
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
     implementation libs.material
+    implementation libs.androidx.lifecycle.runtime.compose.android
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
@@ -61,9 +85,9 @@ dependencies {
     implementation libs.lifecycle.runtime.ktx
     //Dagger - Hilt
     implementation libs.hilt.android
-    ksp libs.hilt.android.compiler
-    implementation libs.hilt.lifecycle.viewmodel
+//    ksp libs.hilt.android.compiler
     ksp libs.hilt.compiler
+    implementation libs.hilt.lifecycle.viewmodel
     implementation libs.hilt.navigation.compose
     //Retrofit
     implementation libs.retrofit

@@ -1,0 +1,26 @@
+package com.user.management.data.repositories
+
+import com.user.management.data.GithubApi
+import com.user.management.data.models.dto.toUserDetailEntity
+import com.user.management.data.models.dto.toUserEntity
+import com.user.management.domain.models.UserDetailEntity
+import com.user.management.domain.models.UserEntity
+import com.user.management.domain.repositories.NetworkUserRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+
+class NetworkUserRepositoryImpl @Inject constructor(
+    private val api: GithubApi
+) : NetworkUserRepository {
+
+    override fun getUserList(perPage: String, page: String): Flow<List<UserEntity>> = flow {
+        val userList = api.getUserList(perPage, page)
+        emit(userList?.map { it.toUserEntity() }.orEmpty())
+    }
+
+    override fun getUserDetailInfo(loginName: String): Flow<UserDetailEntity?> = flow {
+        val userDTO = api.getUserDetail(loginName)
+        emit(userDTO?.toUserDetailEntity())
+    }
+}
