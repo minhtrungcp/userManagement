@@ -1,11 +1,11 @@
-package com.example.weatherapp.ui
+package com.user.management.presenter.screens.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.user.management.presenter.Screen
-import com.user.management.presenter.views.UserListScreen
+import com.user.management.presenter.screens.user_detail.UserDetailScreen
+import com.user.management.presenter.screens.user_list.UserListScreen
 
 
 @Composable
@@ -21,10 +21,10 @@ fun NavHostController(
         ) {
             UserListScreen(navController)
         }
-//        composable(
-//            route = Screen.UserDetailScreen.route + "/{login_name}"
-//        ) {
-//            DetailWeatherScreen(navController)
-//        }
+        composable(
+            route = Screen.UserDetailScreen.route + "/{login_name}"
+        ) {
+            UserDetailScreen(navController)
+        }
     }
 }

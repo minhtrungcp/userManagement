@@ -72,22 +72,24 @@ dependencies {
     implementation libs.compose.tool.preview
     implementation libs.androidx.activity.compose
     androidTestImplementation libs.compose.ui.test
+    debugImplementation libs.ui.test.manifest
     implementation libs.compose.ui.tool
     debugImplementation libs.compose.ui.tool
     implementation libs.lifecycle.viewmodel.compose
+    implementation libs.material.icons.core
+    implementation libs.material.icons.extended
     implementation libs.navigation.compose
-    implementation libs.accompanist.flowlayout
     // Coroutines
     implementation libs.kotlinx.coroutines.core
     implementation libs.kotlinx.coroutines.android
+    testImplementation libs.kotlinx.coroutines.test
     // Coroutine Lifecycle Scopes
     implementation libs.lifecycle.viewmodel.ktx
     implementation libs.lifecycle.runtime.ktx
     //Dagger - Hilt
     implementation libs.hilt.android
-//    ksp libs.hilt.android.compiler
+    ksp libs.hilt.android.compiler
     ksp libs.hilt.compiler
-    implementation libs.hilt.lifecycle.viewmodel
     implementation libs.hilt.navigation.compose
     //Retrofit
     implementation libs.retrofit

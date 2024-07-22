@@ -8,13 +8,13 @@ import retrofit2.http.Query
 
 interface GithubApi {
     @GET("/users")
-    fun getUserList(
+    suspend fun getUserList(
         @Query("per_page") perPage: String,
         @Query("page") page: String
     ): List<UserDTO>?
 
     @GET("/users/{username}")
-    fun getUserDetail(
+    suspend fun getUserDetail(
         @Path("username") userName: String
     ): UserDetailDTO?
 }

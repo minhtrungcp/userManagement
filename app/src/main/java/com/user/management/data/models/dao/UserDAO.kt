@@ -4,25 +4,22 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user : UserModel) : Long
+    suspend fun insertUser(user : UserModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUsers(user : List<UserModel>) : LongArray
+    suspend fun insertUsers(user : List<UserModel>)
 
-    @Query("select * from user_table ")
-    fun getAllUsers(): List<UserModel>?
-
-    @Query("select COUNT(*) FROM user_table")
-    fun getUsersSize(): Long
+    @Query("select * from user_table")
+    fun getAllUsers(): Flow<List<UserModel>?>
 
     @Query("delete from user_table")
-    fun deleteAllUser()
+    suspend fun deleteAllUser()
 
     @Query("delete from user_table where id =:id")
-    fun deleteUser(id : Int)
-
+    suspend fun deleteUser(id : Int)
 }

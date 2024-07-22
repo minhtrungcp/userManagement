@@ -1,15 +1,7 @@
 package com.user.management.presenter.common
 
-import com.user.management.domain.models.UserEntity
-
-sealed interface UIState {
-    data object Loading : UIState
-
-    data class Success(
-        val data: List<UserEntity>
-    ) : UIState
-
-    data class Error(
-        val message: String? = null
-    ) : UIState
+sealed class UIState<T>(val data: T? = null, val message: String? = null) {
+	class Success<T>(data: T) : UIState<T>(data)
+	class Error<T>(message: String, data: T? = null) : UIState<T>(data, message)
+	class Loading<T>(data: T? = null) : UIState<T>(data)
 }

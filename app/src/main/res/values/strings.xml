@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">UserManagement</string>
+    <string name="user_list">Github Users</string>
+    <string name="user_detail">User Details</string>
+    <string name="follower">Follower</string>
+    <string name="following">Following</string>
+    <string name="blog">Blog</string>
+    <string name="retry">Retry</string>
 </resources>

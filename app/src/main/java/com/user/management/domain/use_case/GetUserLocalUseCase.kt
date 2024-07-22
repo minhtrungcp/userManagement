@@ -7,13 +7,13 @@ import javax.inject.Inject
 class GetUserLocalUseCase @Inject constructor(
     private val localRepository: LocalUserRepository
 ) {
-    fun insertUser(user: UserEntity) = localRepository.insertUser(user)
+    suspend fun insertUser(user: UserEntity) = localRepository.insertUser(user)
 
-    fun insertUsers(users: List<UserEntity>) = localRepository.insertUsers(users)
+    suspend fun insertUsers(users: List<UserEntity>) = localRepository.insertUsers(users)
 
     fun getUsers() = localRepository.getAllUsers()
 
-    fun deleteUser(id: Int) = localRepository.deleteUser(id)
+    suspend fun deleteUser(id: Int) = localRepository.deleteUser(id)
 
-    fun deleteAllUser() = localRepository.deleteAllUser()
+    suspend fun deleteAllUser() = localRepository.deleteAllUser()
 }
