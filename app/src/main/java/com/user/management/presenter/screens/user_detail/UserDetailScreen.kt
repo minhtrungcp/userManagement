@@ -176,7 +176,7 @@ fun UserDetailScreen(
 													contentDescription = null
 												)
 												Text(
-													modifier = Modifier.padding(3.dp),
+													modifier = Modifier.padding(start = 3.dp),
 													text = userDetail.location.orEmpty(),
 													style = MaterialTheme.typography.caption
 												)

@@ -5,6 +5,11 @@ import androidx.room.PrimaryKey
 import com.user.management.data.models.dto.UserDTO
 import com.user.management.domain.models.UserEntity
 
+/**
+ * UserModel data class
+ * store in database
+ * object of user_table database
+ */
 @Entity(tableName = "user_table")
 data class UserModel(
     @PrimaryKey
@@ -14,6 +19,9 @@ data class UserModel(
     val htmlUrl: String
 )
 
+/**
+ * mapper DAO to domain object
+ */
 fun UserModel.toUserEntity(): UserEntity {
     return UserEntity(
         id = id,

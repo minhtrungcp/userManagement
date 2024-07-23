@@ -1,5 +1,6 @@
 package com.user.management.presenter.screens.viewmodels
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -39,14 +40,14 @@ class UserViewModel @Inject constructor(
 	var userDetail: SharedFlow<UIState<UserDetailEntity?>> = MutableSharedFlow()
 	private var userListTotal: MutableList<UserEntity> = arrayListOf()
 	private var page: Int = 0
-	private var isLoading: Boolean = false
+	var isLoading = mutableStateOf(false)
+	var toastMessage =  mutableStateOf("")
 
 	/**
 	 * Get all the users
 	 * By default check database data, if exist display db data
 	 * If not, call [fetchUserListNetwork] to fetch data from network
 	 * return list [UserEntity] for success or message error
-	 * collect and update to UI when had data collect
 	 */
 	fun getUserData() {
 		page = 0
@@ -86,19 +87,18 @@ class UserViewModel @Inject constructor(
 							result.data?.toMutableList()?.let {
 								addUserList(it)
 							}
-							isLoading = false
+							isLoading.value = false
 						}
 
 						is Result.Error -> {
-							isLoading = false
+							isLoading.value = false
 							if (userListTotal.size == 0) {
 								_userList.update {
 									UIState.Error(
 										message = result.exception?.message.orEmpty()
 									)
 								}
-							} else {
-							}
+							} else toastMessage.value = result.exception?.message.orEmpty()
 						}
 					}
 				}
@@ -111,8 +111,8 @@ class UserViewModel @Inject constructor(
 	 * [page] will be increase
 	 */
 	fun loadMore() {
-		if (!isLoading) {
-			isLoading = true
+		if (!isLoading.value) {
+			isLoading.value = true
 			page += 1
 			fetchUserListNetwork(false)
 		}

@@ -1,5 +1,9 @@
 package com.user.management.domain.models
 
+/**
+ * UserDetailEntity data class
+ * hold data for app using display user detail info
+ */
 data class UserDetailEntity(
     val id: Int,
     val login: String,

@@ -4,6 +4,10 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.user.management.domain.models.UserEntity
 
+/**
+ * UserDTO data class
+ * Get from network
+ */
 data class UserDTO(
     val id: Int,
     val login: String,
@@ -15,6 +19,9 @@ data class UserDTO(
     val htmlUrl: String
 )
 
+/**
+ * Mapper DTO to domain object
+ */
 fun UserDTO.toUserEntity(): UserEntity {
     return UserEntity(
         id = id,

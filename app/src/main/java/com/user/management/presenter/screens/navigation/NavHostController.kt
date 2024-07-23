@@ -7,7 +7,10 @@ import androidx.navigation.compose.rememberNavController
 import com.user.management.presenter.screens.user_detail.UserDetailScreen
 import com.user.management.presenter.screens.user_list.UserListScreen
 
-
+/**
+ * NavHostController Composable
+ * Define navigate flow
+ */
 @Composable
 fun NavHostController(
 ) {
