@@ -60,7 +60,7 @@ fun UserListScreen(
 	viewModel: UserViewModel = hiltViewModel()
 ) {
 	LaunchedEffect(Unit) {
-		viewModel.getUserData()
+		viewModel.getUserListData()
 	}
 	val uiState by viewModel.userListState.collectAsStateWithLifecycle()
 	val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
@@ -86,7 +86,7 @@ fun UserListScreen(
 				SwipeRefresh(
 					state = swipeRefreshState,
 					onRefresh = {
-						viewModel.onRefresh()
+						viewModel.onRefreshUserList()
 					},
 				) {
 					when (uiState) {
@@ -108,7 +108,7 @@ fun UserListScreen(
 									.width(150.dp)
 									.align(Alignment.CenterHorizontally),
 									onClick = {
-										viewModel.onRefresh()
+										viewModel.onRefreshUserList()
 									}) {
 									Text(
 										text = stringResource(id = R.string.retry),
@@ -205,7 +205,7 @@ fun UserListScreen(
 										}
 									}
 									if (index + 1 >= userList.size) {
-										viewModel.loadMore()
+										viewModel.loadMoreUserList()
 										Box(
 											contentAlignment = Alignment.Center,
 											modifier = Modifier.fillMaxSize()
