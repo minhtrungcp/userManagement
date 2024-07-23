@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.retryWhen
 import java.io.IOException
 
-private const val RETRY_TIME_IN_MILLIS = 15_000L
-private const val RETRY_ATTEMPT_COUNT = 3
+private const val RETRY_TIME_IN_MILLIS = 5000L
+private const val RETRY_ATTEMPT_COUNT = 1
 
 sealed interface Result<out T> {
     data class Success<T>(val data: T) : Result<T>

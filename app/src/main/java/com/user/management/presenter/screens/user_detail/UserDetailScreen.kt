@@ -57,7 +57,7 @@ fun UserDetailScreen(
 	LaunchedEffect(Unit) {
 		viewModel.fetchUserDetail()
 	}
-	val uiState by viewModel.userDetail.collectAsStateWithLifecycle(
+	val uiState by viewModel.userDetailState.collectAsStateWithLifecycle(
 		initialValue = UIState.Loading<UserDetailEntity>()
 	)
 

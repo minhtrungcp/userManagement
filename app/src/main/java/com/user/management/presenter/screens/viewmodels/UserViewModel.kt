@@ -35,13 +35,23 @@ class UserViewModel @Inject constructor(
 	private val getUserLocalUseCase: GetUserLocalUseCase,
 	private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-	private val _userList = MutableStateFlow<UIState<List<UserEntity>>>(UIState.Loading())
-	val userList: StateFlow<UIState<List<UserEntity>>> = _userList.asStateFlow()
-	var userDetail: SharedFlow<UIState<UserDetailEntity?>> = MutableSharedFlow()
+	private val _userListState = MutableStateFlow<UIState<List<UserEntity>>>(UIState.Loading())
+	val userListState: StateFlow<UIState<List<UserEntity>>> = _userListState.asStateFlow()
+	var userDetailState: SharedFlow<UIState<UserDetailEntity?>> = MutableSharedFlow()
 	private var userListTotal: MutableList<UserEntity> = arrayListOf()
 	private var page: Int = 0
 	var isLoading = mutableStateOf(false)
-	var toastMessage =  mutableStateOf("")
+	var toastMessage = mutableStateOf("")
+
+	/**
+	 * refresh user list
+	 * recall with [getUserData]
+	 */
+	fun onRefresh() {
+		userListTotal.clear()
+		_userListState.update { UIState.Loading() }
+		getUserData()
+	}
 
 	/**
 	 * Get all the users
@@ -58,10 +68,11 @@ class UserViewModel @Inject constructor(
 				} else {
 					val users = userList.map { it.toUserEntity() }
 					userListTotal.addAll(users)
-					_userList.update {
+					_userListState.update {
 						UIState.Success(userListTotal)
 					}
 					page = userListTotal.size / PER_PAGE.toInt()
+					isLoading.value = false
 				}
 			}
 		}
@@ -73,32 +84,36 @@ class UserViewModel @Inject constructor(
 	 * Load success display list [UserEntity] to UI collectAsStateWithLifecycle
 	 * If load error display error message
 	 */
-	private fun fetchUserListNetwork(showLoading: Boolean) {
+	fun fetchUserListNetwork(showLoading: Boolean) {
 		viewModelScope.launch {
 			getUserNetworkUseCase.getUserList(PER_PAGE, page.toString())
 				.asResult()
 				.collect { result ->
 					when (result) {
 						is Result.Loading -> {
-							if (showLoading) _userList.update { UIState.Loading() }
+							if (showLoading) _userListState.update { UIState.Loading() }
 						}
 
 						is Result.Success -> {
 							result.data?.toMutableList()?.let {
 								addUserList(it)
 							}
-							isLoading.value = false
 						}
 
 						is Result.Error -> {
-							isLoading.value = false
 							if (userListTotal.size == 0) {
-								_userList.update {
+								_userListState.update {
 									UIState.Error(
 										message = result.exception?.message.orEmpty()
 									)
 								}
-							} else toastMessage.value = result.exception?.message.orEmpty()
+							} else {
+								toastMessage.value = result.exception?.message.orEmpty()
+								_userListState.update {
+									UIState.Success(userListTotal)
+								}
+								isLoading.value = false
+							}
 						}
 					}
 				}
@@ -137,7 +152,7 @@ class UserViewModel @Inject constructor(
 	 */
 	fun fetchUserDetail() {
 		savedStateHandle.get<String>(PARAM_USER_LOGIN_NAME)?.let { loginName ->
-			userDetail = getUserNetworkUseCase.getUserDetailInfo(loginName)
+			userDetailState = getUserNetworkUseCase.getUserDetailInfo(loginName)
 				.asResult()
 				.map { result ->
 					when (result) {

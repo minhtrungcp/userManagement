@@ -2,7 +2,7 @@
 * Android Studio version >= Jellyfish
 
 ## Features:
-* Using API http://openweathermap.org/API
+* Using API https://api.github.com/
 * Display github user list
 * View github user detail
 
