@@ -25,8 +25,10 @@ swiperefresh = "0.21.2-beta"
 coil = "2.7.0"
 lifecycleRuntimeComposeAndroid = "2.8.3"
 kotlinxCoroutineTest = "1.8.1"
-coreTesting = "2.2.0"
-mock = "+"
+androidXTestVersion = "1.6.1"
+mockitoVersion = "5.12.0"
+mockitoKotlinVersion = "3.2.0"
+mockkVersion = "1.13.12"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -66,9 +68,12 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room_ver
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room_version" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeComposeAndroid" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutineTest" }
-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
-mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mock" }
-mockito-android = { group = "org.mockito", name = "mockito-android", version.ref = "mock" }
+core-testing = { group = "androidx.test", name = "core", version.ref = "androidXTestVersion" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoVersion" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlinVersion" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockkVersion" }
+mockk-agent = { group = "io.mockk", name = "mockk-agent", version.ref = "mockkVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
